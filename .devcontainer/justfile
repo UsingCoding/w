@@ -1,0 +1,18 @@
+default: zshrc certs kubectl
+
+zshrc:
+    cp .zshrc $HOME/.zshrc
+
+certs:
+    # Copy certs to `extra`
+    sudo mkdir -p /usr/share/ca-certificates/extra
+    sudo cp /workspaces/certificates/*.crt /usr/share/ca-certificates/extra
+    # Append new certs
+    echo "extra/issuing_ca2.crt" | sudo tee -a /etc/ca-certificates.conf
+    echo "extra/root-ca.crt" | sudo tee -a /etc/ca-certificates.conf
+    # Configure ca-certificates
+    sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure ca-certificates
+
+kubectl:
+    brew install kubectl
+    brew install kubectx

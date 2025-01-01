@@ -1,0 +1,9 @@
+name: "w"
+
+services:
+  app:
+    image: "mcr.microsoft.com/devcontainers/base:bullseye"
+    platform: linux/amd64 # force platform
+    volumes:
+      - ../:/workspace
+    command: sleep infinity
